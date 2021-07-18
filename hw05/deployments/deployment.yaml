@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hw05
+  name: hw05-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hw05
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: hw05
+    spec:
+      containers:
+      - image: nbelyakov/otus-microservices-hw05:latest
+        name: otus-microservices-hw05
+        resources: {}
+        ports:
+          - containerPort: 8000
+            protocol: TCP
