@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c38e3e28-2c64-474b-991f-3be8eb45f679",
+		"_postman_id": "bf27cb86-f401-440e-b6f1-2bebbdf27315",
 		"name": "hw06 - User API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -312,7 +312,7 @@
 		},
 		{
 			"key": "base_url",
-			"value": "192.168.99.100"
+			"value": "arch.homework"
 		},
 		{
 			"key": "base_host",

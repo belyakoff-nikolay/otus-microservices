@@ -23,10 +23,12 @@ Run to deploy the service
 kubectl apply -f ./deployments/kube/app
 ```
 
-To test the solution in Postman 
-1. import test/user-api-postman-collection.json 
-1. change base_url variable to minikube address (minikube ip)
+To test the solution  
+1. add minikube ip to your hosts file as arch.homework
 1. run the collection
+```shell
+newman run ./test/user-api-postman-collection.json
+```
 
 Cleanup
 ```shell
