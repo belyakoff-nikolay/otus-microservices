@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "c38e3e28-2c64-474b-991f-3be8eb45f679",
+		"name": "hw06 - User API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = JSON.parse(responseBody);",
+							"if (resp.error) {",
+							"    throw resp.error",
+							"}",
+							"pm.collectionVariables.set(\"userID\", resp.ID);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"FirstName\": \"Nikola\", \n    \"LastName\": \"Tesla\", \n    \"Email\": \"nikola@tesla.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = JSON.parse(responseBody);",
+							"if (resp.error) {",
+							"    throw resp.error",
+							"}",
+							"",
+							"pm.collectionVariables.set(\"email\", resp.Email);",
+							"pm.collectionVariables.set(\"lastName\", resp.LastName);",
+							"pm.collectionVariables.set(\"firstName\", resp.FirstName);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user/{{userID}}",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ID\": {{userID}},\n    \"FirstName\": \"~Nikola~\",\n    \"LastName\": \"~Tesla~\",\n    \"Email\": \"nikola@tesla.org\"\n}"
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-after-update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = JSON.parse(responseBody);",
+							"if (resp.error) {",
+							"    throw resp.error;",
+							"}",
+							"",
+							"function checkField(fieldName, value){",
+							"    const got = resp[fieldName];",
+							"    pm.expect(got).to.eql(value);",
+							"}",
+							"",
+							"checkField(\"Email\", \"nikola@tesla.org\");",
+							"checkField(\"FirstName\", \"~Nikola~\");",
+							"checkField(\"LastName\", \"~Tesla~\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user/{{userID}}",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = JSON.parse(responseBody);",
+							"if (resp.error) {",
+							"    throw resp.error",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user/{{userID}}",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-after-delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = JSON.parse(responseBody);",
+							"if (!resp.error) {",
+							"    throw \"error expected\";",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "HOST",
+						"value": "{{base_host}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{base_url}}/user/{{userID}}",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userID",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "base_url",
+			"value": "192.168.99.100"
+		},
+		{
+			"key": "base_host",
+			"value": "arch.homework"
+		}
+	]
+}

@@ -1,0 +1,9 @@
+global:
+  postgresql:
+    postgresqlDatabase: ""
+    postgresqlUsername: "appuser"
+    existingSecret: "postgresql-hw06-secret"
+
+service:
+  type: NodePort
+  nodePort: 30432

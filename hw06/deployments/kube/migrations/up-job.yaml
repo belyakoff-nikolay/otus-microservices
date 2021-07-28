@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hw06-migrate-up-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: hw06-migrate-up
+          image: nbelyakov/otus-microservices-hw06-migrations:1.0.1
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hw06-migrations-secret
+                  key: DATABASE_URL
+          args:
+            - "-path"
+            - "/migrations"
+            - "-database"
+            - "$(DATABASE_URL)"
+            - "-verbose"
+            - "up"
+      restartPolicy: Never

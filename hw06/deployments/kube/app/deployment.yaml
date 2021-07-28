@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hw06
+  name: hw06-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hw06
+  template:
+    metadata:
+      labels:
+        app: hw06
+    spec:
+      containers:
+      - image: nbelyakov/otus-microservices-hw06-app:latest
+        name: otus-microservices-hw06
+        env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hw06-app-secret
+                  key: DATABASE_URL
+        ports:
+          - containerPort: 8080
+            protocol: TCP

@@ -1,0 +1,6 @@
+FROM migrate/migrate
+WORKDIR /app
+COPY migrations /migrations
+
+ENTRYPOINT ["migrate"]
+CMD ["--help"]
