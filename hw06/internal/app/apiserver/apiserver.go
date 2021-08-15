@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 	"github.com/belyakoff-nikolay/otus-microservices/hw06/internal/pgstorage"
 
 	"github.com/gorilla/mux"
@@ -66,10 +68,18 @@ func (s *APIServer) configureLogger() error {
 
 func (s *APIServer) configureRouter() {
 	s.router.Handle("/liveness", s.handleLiveness())
-	s.router.Handle("/user", s.handleUserCreate()).Methods("POST")
-	s.router.Handle("/user", s.handleUserUpdate()).Methods("PUT")
-	s.router.Handle("/user/{userid}", s.handleUserGet()).Methods("GET")
-	s.router.Handle("/user/{userid}", s.handleUserDelete()).Methods("DELETE")
+	s.router.Handle("/metrics", promhttp.Handler())
+
+	apiMiddleware := []mux.MiddlewareFunc{
+		s.injectMetrics,
+	}
+
+	userRouter := s.router.PathPrefix("/user").Subrouter()
+	userRouter.Use(apiMiddleware...)
+	userRouter.Handle("", s.handleUserCreate()).Methods("POST")
+	userRouter.Handle("", s.handleUserUpdate()).Methods("PUT")
+	userRouter.Handle("/{userid}", s.handleUserGet()).Methods("GET")
+	userRouter.Handle("/{userid}", s.handleUserDelete()).Methods("DELETE")
 }
 
 func (s *APIServer) configureStorage() error {

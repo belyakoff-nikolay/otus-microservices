@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: hw06-service-monitor
+  labels:
+    app: hw06
+spec:
+  selector:
+    matchLabels:
+      app: hw06
+  endpoints:
+    - interval: 5s
+      port: web
+      path: /metrics

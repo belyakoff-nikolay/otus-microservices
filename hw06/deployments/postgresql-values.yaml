@@ -7,3 +7,5 @@ global:
 service:
   type: NodePort
   nodePort: 30432
+
+postgresqlSharedPreloadLibraries: "pgaudit,pg_stat_statements"

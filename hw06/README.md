@@ -1,4 +1,4 @@
-In directory hw06 
+In directory hw06
 
 Run the following to set up database
 ```shell
@@ -30,10 +30,16 @@ To test the solution
 newman run ./test/user-api-postman-collection.json
 ```
 
+Optionally to install pg exporter run 
+```shell
+helm install postgres-exporter prometheus-community/prometheus-postgres-exporter -f deployments/postgres-exporter-values.yaml
+```
+
 Cleanup
 ```shell
 kubectl delete -f ./deployments/kube/app
 kubectl delete -f ./deployments/kube/migrations
 helm delete postgresql-hw06
 kubectl delete pvc -l app.kubernetes.io/instance=postgresql-hw06
+kubectl delete -f ./deployments/kube/postgresql-secret.yaml
 ```

@@ -1,0 +1,12 @@
+config:
+  datasource: {}
+  datasourceSecret:
+    name: postgres-exporter-secret
+    key: DATABASE_URL
+  logLevel: "info"
+
+serviceMonitor:
+  # When set true then use a ServiceMonitor to configure scraping
+  enabled: true
+
+autoDiscoverDatabases: true

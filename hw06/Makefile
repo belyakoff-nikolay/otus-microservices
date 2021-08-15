@@ -1,4 +1,4 @@
-IMAGE_VERSION := 1.0.1
+IMAGE_VERSION := 1.0.3
 MIGRATION_IMAGE := nbelyakov/otus-microservices-hw06-migrations
 APP_IMAGE := nbelyakov/otus-microservices-hw06-app
 

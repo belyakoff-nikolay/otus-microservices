@@ -1,7 +1,9 @@
 package apiserver
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -68,7 +70,11 @@ func (s *APIServer) handleUserGet() http.HandlerFunc {
 		u, err := s.storage.Users().GetByID(userID)
 		if err != nil {
 			s.logger.Error(err)
-			s.respondError(writer, err, http.StatusInternalServerError)
+			code := http.StatusInternalServerError
+			if errors.Is(err, sql.ErrNoRows) {
+				code = http.StatusBadRequest
+			}
+			s.respondError(writer, err, code)
 			return
 		}
 
